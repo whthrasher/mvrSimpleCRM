@@ -29,7 +29,7 @@ def setup_db(app, database_path=database_path):
     # db.create_all()
 
 '''
-company
+Business
 '''
 class Business(db.Model):
   __tablename__ = 'businesses'

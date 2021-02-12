@@ -79,15 +79,15 @@ def create_app(test_config=None):
         return "Update a business here"
 
     @app.route('/relationships/create', methods=['POST'])
-    def create_customer():
+    def create_relationship():
         return "Create a customer business relationship here"
 
     @app.route('/relationships/<customer_id>/remove', methods=['DELETE'])
-    def delete_customer():
+    def delete_relationship():
         return "Update a customer business relationship here"
 
     @app.route('/relationships/<customer_id>/update', methods=['PATCH'])
-    def update_customer():
+    def update_relationship():
         return "Update a customer business relationship here"
 
     return app
