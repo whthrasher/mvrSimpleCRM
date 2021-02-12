@@ -50,43 +50,88 @@ def create_app(test_config=None):
 
         Business.insert(business)
 
+        # TODO: return the id of the business that was just created in
+        #  the response.
         return jsonify({
             'success': True
         })
 
-
-
     @app.route('/businesses/<business_id>/remove', methods=['DELETE'])
-    def delete_business():
-        return "Delete a business here"
+    def delete_business(business_id):
+        business = Business.query.get(business_id)
 
+        # TODO: Add more specific error handling for this error.
+        if business is None:
+            abort(404)
+        business.delete()
+
+        return jsonify({
+            'success': True,
+            'deleted': business_id
+        })
+
+    # TODO: implement the update endpoint for the business.
     @app.route('/businesses/<business_id>/update', methods=['PATCH'])
-    def update_business():
-        return "Update a business here"
+    def update_business(business_id):
+        business = Business.get(business_id)
+        jsonify({
+            'success': True,
+            'business': business
+        })
 
-    @app.route('/customers/create', methods=['POST'])
-    def create_customer():
-        return "Create a customer here"
+    # TODO: implement the create endpoint for the member.
+    @app.route('/members/add', methods=['POST'])
+    def add_customer():
+        body = request.get_json()
+        if not request.get_json():
+            abort(400)
 
+        date_added = datetime.today()
+        first_name = body['first_name']
+        last_name = body['last_name']
+        membership_type = body['membership_type']
+        address = body['address']
+        city = body['city']
+        state = body['state']
+        phone = body['phnoe']
+        email_address = body['email_address']
+
+        member = Member(first_name=first_name, last_name=last_name,
+                            membership_type=membership_type,
+                        address=address, city=city, state=state,
+                        phone=phone, email_address=email_address)
+
+        Business.insert(business)
+
+    # TODO: implement the remove endpoint for the customer.
     @app.route('/customers/<customer_id>/remove', methods=['DELETE'])
     def delete_customer():
         return "Update a business here"
 
+    # TODO: implement the update endpoint for the customer.
     @app.route('/customers/<customer_id>/update', methods=['PATCH'])
     def update_customer():
         return "Update a business here"
 
+    # TODO: implement the create endpoint for the business/customer
+    #  relationship.
     @app.route('/relationships/create', methods=['POST'])
     def create_relationship():
         return "Create a customer business relationship here"
 
+    # TODO: implement the delete endpoint for the business/customer
+    #  relationship.
     @app.route('/relationships/<customer_id>/remove', methods=['DELETE'])
     def delete_relationship():
         return "Update a customer business relationship here"
 
+    # TODO: implement the update method for the business/customer
+    #  relationship.
     @app.route('/relationships/<customer_id>/update', methods=['PATCH'])
     def update_relationship():
         return "Update a customer business relationship here"
+
+    # TODO: implement the error handling for this application.
 
     return app
 

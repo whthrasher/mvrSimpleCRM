@@ -7,6 +7,8 @@ from sqlalchemy import \
     create_engine
 from flask_sqlalchemy import \
     SQLAlchemy
+from datetime import \
+    datetime
 import json
 
 database_path = os.environ.get('DATABASE_URL')
@@ -80,8 +82,10 @@ class Member(db.Model):
     phone = Column(String(120))
     email_address = Column(String(120))
 
-    def __init__(self, first_name, last_name, membership_type, address,
+    def __init__(self, first_name, last_name, membership_type,
+                 address,
                  city, state, phone, email_address):
+        self.date_added = datetime.today()
         self.first_name = first_name
         self.last_name = last_name
         self.membership_type = membership_type
