@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, abort, jsonify
 from models import setup_db, Business, Member, Customer_Relationship
 from flask_cors import CORS
-from datetime import date
+from datetime import datetime
 
 def create_app(test_config=None):
 
@@ -43,7 +43,7 @@ def create_app(test_config=None):
 
         name = body['name']
         description = body['description']
-        date_added = date.today()
+        date_added = datetime.today()
 
         business = Business(name=name, description=description,
                             date_added=date_added)
