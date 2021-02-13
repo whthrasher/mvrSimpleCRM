@@ -75,6 +75,7 @@ class Member(db.Model):
     id = Column(db.Integer, primary_key=True)
     date_added = Column(db.DateTime, nullable=False)
     first_name = Column(db.String, nullable=False)
+    membership_type = Column(db.String(120))
     last_name = Column(db.String(120))
     address = Column(db.String(120))
     city = Column(db.String(120))
@@ -83,7 +84,8 @@ class Member(db.Model):
     email_address = Column(db.String(120))
 
     def __init__(self, first_name, last_name,
-                 address, city, state, phone, email_address, date_added):
+                 address, city, state, phone, email_address,
+                 membership_type, date_added):
         self.first_name = first_name
         self.last_name = last_name
         self.address = address
@@ -91,6 +93,7 @@ class Member(db.Model):
         self.state = state
         self.phone = phone
         self.email_address = email_address
+        self.membership_type = membership_type
         self.date_added = date_added
 
     def insert(self):
@@ -127,8 +130,7 @@ class Member_Relationship(db.Model):
     member_id = Column(Integer, db.ForeignKey('members.id'),
                        nullable=False)
     active = db.Column(Boolean, nullable=False, default=False)
-    membership_type = Column(Integer, db.ForeignKey(
-        'membership_types.id'), nullable=False)
+    membership_type = Column(Integer, db.ForeignKey('membership_types.id'), nullable=False)
 
     def __init__(self, business_id, member_id, active, membership_type):
         self.business_id = business_id
@@ -160,9 +162,9 @@ class Member_Relationship(db.Model):
     class Membership_Type(db.Model):
         __tablename__ = 'membership_types'
 
-        id = Column(Integer, primary_key=True)
+        id = Column(db.Integer, primary_key=True)
         date_added = Column(db.DateTime, nullable=False)
-        name = Column(String(120), nullable=False)
+        name = Column(db.String(120), nullable=False)
         description = Column(db.String)
         active = db.Column(db.Boolean, nullable=False, default=True)
 
