@@ -3,6 +3,7 @@ from sqlalchemy import \
     Column, \
     String, \
     Integer, \
+    Boolean, \
     DateTime, \
     create_engine
 from flask_sqlalchemy import \
@@ -75,14 +76,13 @@ class Member(db.Model):
     date_added = Column(DateTime, nullable=False)
     first_name = Column(String, nullable=False)
     last_name = Column(String)
-    membership_type = Column(String, nullable=False)
-    address = Column(String)
+    address = Column(String(120))
     city = Column(String(120))
     state = Column(String(120))
     phone = Column(String(120))
     email_address = Column(String(120))
 
-    def __init__(self, first_name, last_name, membership_type,
+    def __init__(self, first_name, last_name,
                  address,
                  city, state, phone, email_address):
         self.date_added = datetime.today()
