@@ -84,7 +84,6 @@ class Member(db.Model):
 
     def __init__(self, first_name, last_name,
                  address, city, state, phone, email_address, date_added):
-        self.date_added = date_added
         self.first_name = first_name
         self.last_name = last_name
         self.address = address
@@ -92,6 +91,7 @@ class Member(db.Model):
         self.state = state
         self.phone = phone
         self.email_address = email_address
+        self.date_added = date_added
 
     def insert(self):
         db.session.add(self)

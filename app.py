@@ -111,10 +111,12 @@ def create_app(test_config=None):
                         date_added=date_added)
 
         Member.insert(member)
+
         return jsonify({
             'success': True,
             'member': member.format()
         })
+
     # TODO: implement the remove endpoint for the customer.
     @app.route('/members/<member_id>/remove', methods=['DELETE'])
     def delete_member():
