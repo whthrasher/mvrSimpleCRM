@@ -104,12 +104,10 @@ def create_app(test_config=None):
         state = body['state']
         phone = body['phone']
         email_address = body['email_address']
-        membership_type = body['membership_type']
 
         member = Member(first_name=first_name, last_name=last_name,
                         address=address, city=city, state=state,
                         phone=phone, email_address=email_address,
-                        membership_type=membership_type,
                         date_added=date_added)
 
         Member.insert(member)

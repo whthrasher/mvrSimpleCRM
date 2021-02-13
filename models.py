@@ -75,7 +75,6 @@ class Member(db.Model):
     id = Column(db.Integer, primary_key=True)
     date_added = Column(db.DateTime, nullable=False)
     first_name = Column(db.String, nullable=False)
-    membership_type = Column(db.String(120))
     last_name = Column(db.String(120))
     address = Column(db.String(120))
     city = Column(db.String(120))
