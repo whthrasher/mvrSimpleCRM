@@ -37,10 +37,10 @@ Business
 class Business(db.Model):
   __tablename__ = 'businesses'
 
-  id = Column(Integer, primary_key=True)
-  date_added = Column(DateTime, nullable=False)
-  name = Column(String, nullable=False)
-  description = Column(String)
+  id = Column(db.Integer, primary_key=True)
+  date_added = Column(db.DateTime, nullable=False)
+  name = Column(db.String, nullable=False)
+  description = Column(db.String)
 
   def __init__(self, name, description, date_added):
     self.name = name
