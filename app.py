@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, abort, jsonify
-from models import setup_db, Business, Member, Customer_Relationship
+from models import setup_db, Business, Member, Member_Relationship
 from flask_cors import CORS
 from datetime import datetime
 
