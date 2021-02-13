@@ -74,7 +74,7 @@ def create_app(test_config=None):
     @app.route('/businesses/<business_id>/update', methods=['PATCH'])
     def update_business(business_id):
         business = Business.get(business_id)
-        jsonify({
+        return jsonify({
             'success': True,
             'business': business
         })
@@ -83,10 +83,10 @@ def create_app(test_config=None):
     @app.route('/members/add', methods=['POST'])
     def add_member():
         body = request.get_json()
-
         if not request.get_json():
             abort(400)
         # TODO: check to ensure that the member does not already exist.
+        date_added = datetime.today()
         first_name = body['first_name']
         last_name = body['last_name']
         address = body['address']
@@ -97,10 +97,14 @@ def create_app(test_config=None):
 
         member = Member(first_name=first_name, last_name=last_name,
                         address=address, city=city, state=state,
-                        phone=phone, email_address=email_address)
+                        phone=phone, email_address=email_address,
+                        date_added=date_added)
 
         Member.insert(member)
-
+        return jsonify({
+            'success': True,
+            'member': member.format()
+        })
     # TODO: implement the remove endpoint for the customer.
     @app.route('/members/<member_id>/remove', methods=['DELETE'])
     def delete_member():
