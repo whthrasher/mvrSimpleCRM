@@ -72,15 +72,15 @@ members
 class Member(db.Model):
     __tablename__ = 'members'
 
-    id = Column(Integer, primary_key=True)
-    date_added = Column(DateTime, nullable=False)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String)
-    address = Column(String(120))
-    city = Column(String(120))
-    state = Column(String(120))
-    phone = Column(String(120))
-    email_address = Column(String(120))
+    id = Column(db.Integer, primary_key=True)
+    date_added = Column(db.DateTime, nullable=False)
+    first_name = Column(db.String, nullable=False)
+    last_name = Column(db.String(120))
+    address = Column(db.String(120))
+    city = Column(db.String(120))
+    state = Column(db.String(120))
+    phone = Column(db.String(120))
+    email_address = Column(db.String(120))
 
     def __init__(self, first_name, last_name,
                  address, city, state, phone, email_address, date_added):
