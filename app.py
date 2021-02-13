@@ -34,7 +34,6 @@ def create_app(test_config=None):
             'businesses': formatted_businesses
         })
 
-
     @app.route('/businesses/add', methods=['POST'])
     def add_business():
         body = request.get_json()
@@ -77,6 +76,17 @@ def create_app(test_config=None):
         return jsonify({
             'success': True,
             'business': business
+        })
+
+    @app.route('/members', methods=['GET'])
+    def get_businesses():
+        members = Member.query.all()
+        formatted_members = [member.format() for member in
+                               members]
+
+        return jsonify({
+            'success': True,
+            'members': formatted_members
         })
 
     # TODO: implement the create endpoint for the member.

@@ -83,8 +83,7 @@ class Member(db.Model):
     email_address = Column(String(120))
 
     def __init__(self, first_name, last_name,
-                 address,
-                 city, state, phone, email_address, date_added):
+                 address, city, state, phone, email_address, date_added):
         self.date_added = date_added
         self.first_name = first_name
         self.last_name = last_name
