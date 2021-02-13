@@ -86,10 +86,9 @@ def create_app(test_config=None):
 
         if not request.get_json():
             abort(400)
-
+        # TODO: check to ensure that the member does not already exist.
         first_name = body['first_name']
         last_name = body['last_name']
-        membership_type = body['membership_type']
         address = body['address']
         city = body['city']
         state = body['state']
@@ -97,7 +96,6 @@ def create_app(test_config=None):
         email_address = body['email_address']
 
         member = Member(first_name=first_name, last_name=last_name,
-                            membership_type=membership_type,
                         address=address, city=city, state=state,
                         phone=phone, email_address=email_address)
 

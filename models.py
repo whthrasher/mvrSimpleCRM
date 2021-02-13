@@ -88,7 +88,6 @@ class Member(db.Model):
         self.date_added = datetime.today()
         self.first_name = first_name
         self.last_name = last_name
-        self.membership_type = membership_type
         self.address = address
         self.city = city
         self.state = state
@@ -119,17 +118,18 @@ class Member(db.Model):
 bm_rel
 '''
 
-class Customer_Relationship(db.Model):
-    __tablename__ = 'customer_relationships'
+class Member_Relationship(db.Model):
+    __tablename__ = 'member_relationships'
 
     id = Column(Integer, primary_key=True)
-    date_added = Column(db.DateTime, nullable=False)
-    business_id = Column(db.Integer, db.ForeignKey('businesses.id'),
+    date_added = Column(DateTime, nullable=False)
+    business_id = Column(Integer, db.ForeignKey('businesses.id'),
                          nullable=False)
-    member_id = Column(db.Integer, db.ForeignKey('members.id'),
+    member_id = Column(Integer, db.ForeignKey('members.id'),
                        nullable=False)
-    active = db.Column(db.Boolean, nullable=False, default=False)
-    membership_type = Column(String)
+    active = db.Column(Boolean, nullable=False, default=False)
+    membership_type = Column(Integer, db.ForeignKey(
+        'membership_types.id'), nullable=False)
 
     def __init__(self, business_id, member_id, active, membership_type):
         self.business_id = business_id
@@ -157,5 +157,40 @@ class Customer_Relationship(db.Model):
             'membership_type': self.membership_type,
             'date_added': self.date_added
         }
+
+    class Membership_Type(db.Model):
+        __tablename__ = 'membership_types'
+
+        id = Column(Integer, primary_key=True)
+        date_added = Column(db.DateTime, nullable=False)
+        name = Column(String(120), nullable=False)
+        description = Column(db.String)
+        active = db.Column(db.Boolean, nullable=False, default=True)
+
+        def __init__(self, name, description, active):
+            self.date_added = datetime.today()
+            self.name = name
+            self.description = description
+            self.active = active
+
+        def insert(self):
+            db.session.add(self)
+            db.session.commit()
+
+        def update(self):
+            db.session.commit()
+
+        def delete(self):
+            db.session.delete(self)
+            db.session.commit()
+
+        def format(self):
+            return {
+                'id': self.id,
+                'date_added': self.date_added,
+                'name': self.name,
+                'description': self.description,
+                'active': self.actie,
+            }
 
 
