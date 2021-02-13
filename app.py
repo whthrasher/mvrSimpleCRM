@@ -81,19 +81,19 @@ def create_app(test_config=None):
 
     # TODO: implement the create endpoint for the member.
     @app.route('/members/add', methods=['POST'])
-    def add_customer():
+    def add_member():
         body = request.get_json()
+
         if not request.get_json():
             abort(400)
 
-        date_added = datetime.today()
         first_name = body['first_name']
         last_name = body['last_name']
         membership_type = body['membership_type']
         address = body['address']
         city = body['city']
         state = body['state']
-        phone = body['phnoe']
+        phone = body['phone']
         email_address = body['email_address']
 
         member = Member(first_name=first_name, last_name=last_name,
@@ -101,16 +101,16 @@ def create_app(test_config=None):
                         address=address, city=city, state=state,
                         phone=phone, email_address=email_address)
 
-        Business.insert(business)
+        Member.insert(member)
 
     # TODO: implement the remove endpoint for the customer.
-    @app.route('/customers/<customer_id>/remove', methods=['DELETE'])
-    def delete_customer():
+    @app.route('/members/<member_id>/remove', methods=['DELETE'])
+    def delete_member():
         return "Update a business here"
 
     # TODO: implement the update endpoint for the customer.
-    @app.route('/customers/<customer_id>/update', methods=['PATCH'])
-    def update_customer():
+    @app.route('/members/<member_id>/update', methods=['PATCH'])
+    def update_member():
         return "Update a business here"
 
     # TODO: implement the create endpoint for the business/customer
