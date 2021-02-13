@@ -79,7 +79,7 @@ def create_app(test_config=None):
         })
 
     @app.route('/members', methods=['GET'])
-    def get_businesses():
+    def get_members():
         members = Member.query.all()
         formatted_members = [member.format() for member in
                                members]
