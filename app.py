@@ -55,18 +55,18 @@ def create_app(test_config=None):
             'new_business': business.format()
         })
 
-    @app.route('/businesses/<business_id>/remove', methods=['DELETE'])
+    @app.route('/businesses/<int:business_id>', methods=['DELETE'])
     def delete_business(business_id):
         business = Business.query.get(business_id)
 
-        # TODO: Add more specific error handling for this error.
         if business is None:
             abort(404)
+
         business.delete()
 
         return jsonify({
             'success': True,
-            'deleted': business_id
+            'deleted': business.format()
         })
 
     # TODO: implement the update endpoint for the business.
