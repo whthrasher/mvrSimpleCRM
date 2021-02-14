@@ -134,6 +134,7 @@ class Member_Relationship(db.Model):
         self.member_id = member_id
         self.active = active
         self.membership_type = membership_type
+        self.date_added = datetime.today()
 
     def insert(self):
         db.session.add(self)
@@ -156,39 +157,39 @@ class Member_Relationship(db.Model):
             'date_added': self.date_added
         }
 
-    class Membership_Type(db.Model):
-        __tablename__ = 'membership_types'
+class Membership_Type(db.Model):
+    __tablename__ = 'membership_types'
 
-        id = Column(db.Integer, primary_key=True)
-        date_added = Column(db.DateTime, nullable=False)
-        name = Column(db.String(120), nullable=False)
-        description = Column(db.String)
-        active = db.Column(db.Boolean, nullable=False, default=True)
+    id = Column(db.Integer, primary_key=True)
+    date_added = Column(db.DateTime, nullable=False)
+    name = Column(db.String(120), nullable=False)
+    description = Column(db.String)
+    active = db.Column(db.Boolean, nullable=False, default=True)
 
-        def __init__(self, name, description, active):
-            self.date_added = datetime.today()
-            self.name = name
-            self.description = description
-            self.active = active
+    def __init__(self, name, description, active):
+        self.date_added = datetime.today()
+        self.name = name
+        self.description = description
+        self.active = active
 
-        def insert(self):
-            db.session.add(self)
-            db.session.commit()
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
 
-        def update(self):
-            db.session.commit()
+    def update(self):
+        db.session.commit()
 
-        def delete(self):
-            db.session.delete(self)
-            db.session.commit()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
-        def format(self):
-            return {
-                'id': self.id,
-                'date_added': self.date_added,
-                'name': self.name,
-                'description': self.description,
-                'active': self.actie,
-            }
+    def format(self):
+        return {
+            'id': self.id,
+            'date_added': self.date_added,
+            'name': self.name,
+            'description': self.description,
+            'active': self.active,
+        }
 
 

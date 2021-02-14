@@ -1,6 +1,10 @@
 import os
 from flask import Flask, request, abort, jsonify
-from models import setup_db, Business, Member, Member_Relationship
+from models import \
+    setup_db, \
+    Business, \
+    Member, \
+    Member_Relationship, Membership_Type
 from flask_cors import CORS
 from datetime import datetime
 
@@ -208,9 +212,30 @@ def create_app(test_config=None):
 
     # TODO: implement the create endpoint for the business/customer
     #  relationship.
-    @app.route('/relationships/create', methods=['POST'])
+    @app.route('/relationships/add', methods=['POST'])
     def create_relationship():
-        return "Create a customer business relationship here"
+        body = request.get_json()
+
+        if not request.get_json():
+            abort(400)
+
+        business_id = body['business_id']
+        member_id = body['member_id']
+        active = body['active']
+        membership_type = body['membership_type']
+
+        member_relationship = Member_Relationship(business_id=business_id,
+                                                  member_id=member_id,
+                                                  active=active,
+                                                  membership_type=membership_type
+                                                  )
+
+        Member_Relationship.insert(member_relationship)
+
+        return jsonify({
+            'success': True,
+            'member': member_relationship.format()
+        })
 
     # TODO: implement the delete endpoint for the business/customer
     #  relationship.
@@ -224,6 +249,29 @@ def create_app(test_config=None):
     def update_relationship():
         return "Update a customer business relationship here"
 
+    @app.route('/memberships/types/add', methods=['POST'])
+    def add_membership_type():
+        body = request.get_json()
+
+        if not request.get_json():
+            abort(400)
+
+        name = body['name']
+        description = body['description']
+        active = body['active']
+
+        membership_type = Membership_Type(
+            name=name,
+            description=description,
+            active=active,
+            )
+
+        Membership_Type.insert(membership_type)
+
+        return jsonify({
+            'success': True,
+            'membership_type': membership_type.format()
+        })
     # TODO: implement the error handling for this application.
 
     return app
