@@ -37,6 +37,7 @@ def create_app(test_config=None):
     @app.route('/businesses/add', methods=['POST'])
     def add_business():
         body = request.get_json()
+        print(body)
         if not request.get_json():
             abort(400)
 
@@ -49,10 +50,9 @@ def create_app(test_config=None):
 
         Business.insert(business)
 
-        # TODO: return the id of the business that was just created in
-        #  the response.
         return jsonify({
-            'success': True
+            'success': True,
+            'new_business': business.format()
         })
 
     @app.route('/businesses/<business_id>/remove', methods=['DELETE'])
@@ -89,7 +89,6 @@ def create_app(test_config=None):
             'members': formatted_members
         })
 
-    # TODO: implement the create endpoint for the member.
     @app.route('/members/add', methods=['POST'])
     def add_member():
         body = request.get_json()
