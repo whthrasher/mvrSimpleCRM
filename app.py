@@ -4,6 +4,17 @@ from models import setup_db, Business, Member, Member_Relationship
 from flask_cors import CORS
 from datetime import datetime
 
+# TODO: Implement the OAuth authentication for this application
+# TODO: Implement the frontend for this application
+# TODO: Create Readme for this API
+# TODO: Create the tests for this API
+# TODO: Create the Heroku Code Pipeline for this application
+# TODO: Add pagination when all of the members or businesses are returned
+# TODO: Ensure that all of the information that is transferred is secure
+# TODO: Add a GET request for each endpoint to access the individual id
+# TODO: Make sure that there are no print items that will reveal
+#  important information into the logs.
+
 def create_app(test_config=None):
 
     app = Flask(__name__)
@@ -72,18 +83,21 @@ def create_app(test_config=None):
     @app.route('/businesses/<int:business_id>', methods=['PATCH'])
     def update_business(business_id):
         body = request.get_json()
-        print(body)
 
-        name = body['name']
-        description = body['description']
+        if 'name' in body:
+            name = body['name']
+        if 'description' in body:
+            description = body['description']
 
         business = Business.query.filter(Business.id == business_id).one_or_none()
 
         if business is None:
             abort(404)
         else:
-            business.name = name
-            business.description = description
+            if 'name' in body:
+                business.name = name
+            if 'description' in body:
+                business.description = description
             business.update()
 
         return jsonify({
@@ -144,10 +158,53 @@ def create_app(test_config=None):
             'deleted': member.format()
         })
 
-    # TODO: implement the update endpoint for the customer.
-    @app.route('/members/<member_id>/update', methods=['PATCH'])
-    def update_member():
-        return "Update a business here"
+    @app.route('/members/<int:member_id>', methods=['PATCH'])
+    def update_member(member_id):
+        body = request.get_json()
+        address_in_dict = 'address' in body
+        if 'first_name' in body:
+            first_name = body['first_name']
+        if 'last_name' in body:
+            last_name = body['last_name']
+        if 'address' in body:
+            address = body['address']
+        if 'city' in body:
+            city = body['city']
+        if 'state' in body:
+            state = body['state']
+        if 'phone' in body:
+            phone = body['phone']
+        if 'email_address' in body:
+            email_address = body['email_address']
+
+        member = Member.query.filter(
+        Member.id == member_id).one_or_none()
+
+        if member is None:
+            abort(404)
+
+        else:
+            if 'first_name' in body:
+                member.first_name = first_name
+            if 'last_name' in body:
+                member.last_name = last_name
+            if 'address' in body:
+                member.address = address
+            if 'city' in body:
+                member.city = city
+            if 'state' in body:
+                member.state = state
+            if 'phone' in body:
+                member.phone = phone
+            if 'email_address' in body:
+                member.email_address = email_address
+
+            member.update()
+
+        return jsonify({
+            'success': True,
+            'updated': member.format()
+        })
 
     # TODO: implement the create endpoint for the business/customer
     #  relationship.
