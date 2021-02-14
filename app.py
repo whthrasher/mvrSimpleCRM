@@ -57,7 +57,7 @@ def create_app(test_config=None):
 
     @app.route('/businesses/<int:business_id>', methods=['DELETE'])
     def delete_business(business_id):
-        business = Business.query.get(business_id)
+        business = Business.query.filter(Business.id == business_id).one_or_none()
 
         if business is None:
             abort(404)
@@ -69,13 +69,26 @@ def create_app(test_config=None):
             'deleted': business.format()
         })
 
-    # TODO: implement the update endpoint for the business.
-    @app.route('/businesses/<business_id>/update', methods=['PATCH'])
+    @app.route('/businesses/<int:business_id>', methods=['PATCH'])
     def update_business(business_id):
-        business = Business.get(business_id)
+        body = request.get_json()
+        print(body)
+
+        name = body['name']
+        description = body['description']
+
+        business = Business.query.filter(Business.id == business_id).one_or_none()
+
+        if business is None:
+            abort(404)
+        else:
+            business.name = name
+            business.description = description
+            business.update()
+
         return jsonify({
             'success': True,
-            'business': business
+            'business': business.format()
         })
 
     @app.route('/members', methods=['GET'])
