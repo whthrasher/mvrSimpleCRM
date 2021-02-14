@@ -105,9 +105,10 @@ def create_app(test_config=None):
     @app.route('/members/add', methods=['POST'])
     def add_member():
         body = request.get_json()
+
         if not request.get_json():
             abort(400)
-        # TODO: check to ensure that the member does not already exist.
+
         date_added = datetime.today()
         first_name = body['first_name']
         last_name = body['last_name']
@@ -129,10 +130,19 @@ def create_app(test_config=None):
             'member': member.format()
         })
 
-    # TODO: implement the remove endpoint for the customer.
-    @app.route('/members/<member_id>/remove', methods=['DELETE'])
-    def delete_member():
-        return "Update a business here"
+    @app.route('/members/<int:member_id>', methods=['DELETE'])
+    def delete_member(member_id):
+        member = Member.query.filter(Member.id == member_id).one_or_none()
+
+        if member is None:
+            abort(404)
+
+        member.delete()
+
+        return jsonify({
+            'success': True,
+            'deleted': member.format()
+        })
 
     # TODO: implement the update endpoint for the customer.
     @app.route('/members/<member_id>/update', methods=['PATCH'])
