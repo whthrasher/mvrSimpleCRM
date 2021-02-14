@@ -210,8 +210,6 @@ def create_app(test_config=None):
             'updated': member.format()
         })
 
-    # TODO: implement the create endpoint for the business/customer
-    #  relationship.
     @app.route('/relationships/add', methods=['POST'])
     def create_relationship():
         body = request.get_json()
@@ -237,11 +235,32 @@ def create_app(test_config=None):
             'member': member_relationship.format()
         })
 
-    # TODO: implement the delete endpoint for the business/customer
-    #  relationship.
-    @app.route('/relationships/<customer_id>/remove', methods=['DELETE'])
-    def delete_relationship():
-        return "Update a customer business relationship here"
+    @app.route('/relationships/<int:relationship_id>', methods=['DELETE'])
+    def delete_relationship(relationship_id):
+        member_relationship = Member_Relationship.query.filter(
+            Member_Relationship.id == relationship_id).one_or_none()
+
+        if member_relationship is None:
+            abort(404)
+
+        member_relationship.delete()
+
+        return jsonify({
+            'success': True,
+            'deleted': member_relationship.format()
+        })
+
+    @app.route('/relationships', methods=['GET'])
+    def get_relationships():
+        member_relationships = Member_Relationship.query.all()
+        formatted_relationships = [member_relationship.format() for
+                                   member_relationship in
+                                   member_relationships]
+
+        return jsonify({
+            'success': True,
+            'businesses': formatted_relationships
+        })
 
     # TODO: implement the update method for the business/customer
     #  relationship.
