@@ -127,13 +127,14 @@ class Member_Relationship(db.Model):
     member_id = Column(Integer, db.ForeignKey('members.id'),
                        nullable=False)
     active = db.Column(Boolean, nullable=False, default=False)
-    membership_type = Column(Integer, db.ForeignKey('membership_types.id'), nullable=False)
+    membership_type_id = Column(Integer, db.ForeignKey(
+        'membership_types.id'), nullable=False)
 
-    def __init__(self, business_id, member_id, active, membership_type):
+    def __init__(self, business_id, member_id, active, membership_type_id):
         self.business_id = business_id
         self.member_id = member_id
         self.active = active
-        self.membership_type = membership_type
+        self.membership_type_id = membership_type_id
         self.date_added = datetime.today()
 
     def insert(self):
@@ -153,7 +154,7 @@ class Member_Relationship(db.Model):
             'business_id': self.business_id,
             'member_id': self.member_id,
             'active': self.active,
-            'membership_type': self.membership_type,
+            'membership_type_id': self.membership_type_id,
             'date_added': self.date_added
         }
 

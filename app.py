@@ -220,12 +220,12 @@ def create_app(test_config=None):
         business_id = body['business_id']
         member_id = body['member_id']
         active = body['active']
-        membership_type = body['membership_type']
+        membership_type_id = body['membership_type_id']
 
         member_relationship = Member_Relationship(business_id=business_id,
                                                   member_id=member_id,
                                                   active=active,
-                                                  membership_type=membership_type
+                                                  membership_type_id=membership_type_id
                                                   )
 
         Member_Relationship.insert(member_relationship)
@@ -259,14 +259,45 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'businesses': formatted_relationships
+            'relationships': formatted_relationships
         })
 
     # TODO: implement the update method for the business/customer
     #  relationship.
-    @app.route('/relationships/<customer_id>/update', methods=['PATCH'])
-    def update_relationship():
-        return "Update a customer business relationship here"
+    @app.route('/relationships/<int:relationship_id>', methods=['PATCH'])
+    def update_relationship(relationship_id):
+        body = request.get_json()
+        if 'business_id' in body:
+            business_id = body['business_id']
+        if 'member_id' in body:
+            member_id = body['member_id']
+        if 'active' in body:
+            active = body['active']
+        if 'membership_type_id' in body:
+            membership_type_id = body['membership_type_id']
+
+        member_relationship = Member_Relationship.query.filter(
+            Member_Relationship.id == relationship_id).one_or_none()
+
+        if member_relationship is None:
+            abort(404)
+
+        else:
+            if 'business_id' in body:
+                member_relationship.business_id = business_id
+            if 'member_id' in body:
+                member_relationship.member_id = member_id
+            if 'active' in body:
+                member_relationship.active = active
+            if 'membership_type_id' in body:
+                member_relationship.membership_type_id = membership_type_id
+
+            member_relationship.update()
+
+        return jsonify({
+            'success': True,
+            'updated': member_relationship.format()
+        })
 
     @app.route('/memberships/types/add', methods=['POST'])
     def add_membership_type():
