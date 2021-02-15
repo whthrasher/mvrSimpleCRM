@@ -15,9 +15,6 @@ from datetime import datetime
 # TODO: Create the Heroku Code Pipeline for this application
 # TODO: Add pagination when all of the members or businesses are returned
 # TODO: Ensure that all of the information that is transferred is secure
-# TODO: Add a GET request for each endpoint to access the individual id
-# TODO: Make sure that there are no print items that will reveal
-#  important information into the logs.
 
 def create_app(test_config=None):
 
@@ -38,6 +35,10 @@ def create_app(test_config=None):
         greeting = "Hello"
         return greeting
 
+#-------------------
+# Business Endpoints
+#-------------------
+
     @app.route('/businesses', methods=['GET'])
     def get_businesses():
         businesses = Business.query.all()
@@ -48,11 +49,21 @@ def create_app(test_config=None):
             'success': True,
             'businesses': formatted_businesses
         })
+    @app.route('/businesses/<int:business_id>', methods=['GET'])
+    def get_business(business_id):
+        business = Business.query.filter(Business.id == business_id).one_or_none()
+
+        if business is None:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'business': business.format()
+        })
 
     @app.route('/businesses/add', methods=['POST'])
     def add_business():
         body = request.get_json()
-        print(body)
         if not request.get_json():
             abort(400)
 
@@ -109,6 +120,9 @@ def create_app(test_config=None):
             'business': business.format()
         })
 
+# -------------------
+# Members Endpoints
+# -------------------
     @app.route('/members', methods=['GET'])
     def get_members():
         members = Member.query.all()
@@ -118,6 +132,18 @@ def create_app(test_config=None):
         return jsonify({
             'success': True,
             'members': formatted_members
+        })
+
+    @app.route('/members/<int:member_id>', methods=['GET'])
+    def get_member(member_id):
+        member = Member.query.filter(Member.id == member_id).one_or_none()
+
+        if member is None:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'members': member.format()
         })
 
     @app.route('/members/add', methods=['POST'])
@@ -210,6 +236,9 @@ def create_app(test_config=None):
             'updated': member.format()
         })
 
+# -------------------
+# Relationships Endpoints
+# -------------------
     @app.route('/relationships/add', methods=['POST'])
     def create_relationship():
         body = request.get_json()
@@ -262,8 +291,19 @@ def create_app(test_config=None):
             'relationships': formatted_relationships
         })
 
-    # TODO: implement the update method for the business/customer
-    #  relationship.
+    @app.route('/relationships/<int:relationship_id>', methods=['GET'])
+    def get_relationship(relationship_id):
+        member_relationship = Member_Relationship.query.filter(
+            Member_Relationship.id == relationship_id).one_or_none()
+
+        if member_relationship is None:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'relationships': member_relationship.format()
+        })
+
     @app.route('/relationships/<int:relationship_id>', methods=['PATCH'])
     def update_relationship(relationship_id):
         body = request.get_json()
@@ -299,6 +339,9 @@ def create_app(test_config=None):
             'updated': member_relationship.format()
         })
 
+# -------------------
+# Membership Types Endpoints
+# -------------------
     @app.route('/memberships/types/add', methods=['POST'])
     def add_membership_type():
         body = request.get_json()
@@ -321,6 +364,80 @@ def create_app(test_config=None):
         return jsonify({
             'success': True,
             'membership_type': membership_type.format()
+        })
+
+    @app.route('/memberships/types/<int:membership_type_id>', methods=[
+        'PATCH'])
+    def update_membership_type(membership_type_id):
+        body = request.get_json()
+        if 'name' in body:
+            name = body['name']
+        if 'description' in body:
+            description = body['description']
+        if 'active' in body:
+            active = body['active']
+
+        membership_type = Membership_Type.query.filter(
+            Membership_Type.id == membership_type_id).one_or_none()
+
+        if membership_type is None:
+            abort(404)
+
+        else:
+            if 'name' in body:
+                membership_type.name = name
+            if 'description' in body:
+                membership_type.description = description
+            if 'active' in body:
+                membership_type.active = active
+
+            membership_type.update()
+
+        return jsonify({
+            'success': True,
+            'updated': membership_type.format()
+        })
+
+    @app.route('/memberships/types', methods=['GET'])
+    def get_membership_types():
+        membership_types = Membership_Type.query.all()
+        formatted_types = [membership_type.format() for
+                                   membership_type in
+                                   membership_types]
+
+        return jsonify({
+            'success': True,
+            'membership_types': formatted_types
+        })
+
+    @app.route('/memberships/types/<int:membership_type_id>', methods=[
+        'GET'])
+    def get_membership_type(membership_type_id):
+        membership_type = Membership_Type.query.filter(
+            Membership_Type.id == membership_type_id).one_or_none()
+
+        if membership_type is None:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'membership_types': membership_type.format()
+        })
+
+    @app.route('/memberships/types/<int:membership_type_id>', methods=[
+        'DELETE'])
+    def delete_membership_type(membership_type_id):
+        membership_type = Membership_Type.query.filter(
+            Membership_Type.id == membership_type_id).one_or_none()
+
+        if membership_type is None:
+            abort(404)
+
+        membership_type.delete()
+
+        return jsonify({
+            'success': True,
+            'deleted': membership_type.format()
         })
     # TODO: implement the error handling for this application.
 
