@@ -1,5 +1,9 @@
 import os
-from flask import Flask, request, abort, jsonify
+from flask import Flask, \
+    request, \
+    abort, \
+    jsonify, \
+    redirect
 from models import \
     setup_db, \
     Business, \
@@ -7,6 +11,8 @@ from models import \
     Member_Relationship, Membership_Type
 from flask_cors import CORS
 from datetime import datetime
+from auth.auth import AuthError, requires_auth
+
 
 # TODO: Implement the OAuth authentication for this application
 # TODO: Implement the frontend for this application
@@ -35,12 +41,19 @@ def create_app(test_config=None):
         greeting = "Hello"
         return greeting
 
+    @app.route('/login')
+    def auth0_redirect():
+        AUTH0_AUTHORIZE_URL = os.environ['AUTH0_AUTHORIZE_URL']
+        print(AUTH0_AUTHORIZE_URL)
+        return redirect(AUTH0_AUTHORIZE_URL)
+
 #-------------------
 # Business Endpoints
 #-------------------
 
     @app.route('/businesses', methods=['GET'])
-    def get_businesses():
+    @requires_auth('get:businesses')
+    def get_businesses(payload):
         businesses = Business.query.all()
         formatted_businesses = [business.format() for business in
                                businesses]
@@ -50,7 +63,8 @@ def create_app(test_config=None):
             'businesses': formatted_businesses
         })
     @app.route('/businesses/<int:business_id>', methods=['GET'])
-    def get_business(business_id):
+    @requires_auth('get:businesses')
+    def get_business(business_id, payload):
         business = Business.query.filter(Business.id == business_id).one_or_none()
 
         if business is None:
@@ -62,7 +76,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/businesses/add', methods=['POST'])
-    def add_business():
+    @requires_auth('post:businesses')
+    def add_business(payload):
         body = request.get_json()
         if not request.get_json():
             abort(400)
@@ -82,7 +97,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/businesses/<int:business_id>', methods=['DELETE'])
-    def delete_business(business_id):
+    @requires_auth('delete:businesses')
+    def delete_business(business_id, payload):
         business = Business.query.filter(Business.id == business_id).one_or_none()
 
         if business is None:
@@ -96,7 +112,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/businesses/<int:business_id>', methods=['PATCH'])
-    def update_business(business_id):
+    @requires_auth('patch:businesses')
+    def update_business(business_id, payload):
         body = request.get_json()
 
         if 'name' in body:
@@ -124,7 +141,8 @@ def create_app(test_config=None):
 # Members Endpoints
 # -------------------
     @app.route('/members', methods=['GET'])
-    def get_members():
+    @requires_auth('get:members')
+    def get_members(payload):
         members = Member.query.all()
         formatted_members = [member.format() for member in
                                members]
@@ -135,7 +153,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/members/<int:member_id>', methods=['GET'])
-    def get_member(member_id):
+    @requires_auth('get:members')
+    def get_member(member_id, payload):
         member = Member.query.filter(Member.id == member_id).one_or_none()
 
         if member is None:
@@ -147,7 +166,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/members/add', methods=['POST'])
-    def add_member():
+    @requires_auth('post:members')
+    def add_member(payload):
         body = request.get_json()
 
         if not request.get_json():
@@ -175,7 +195,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/members/<int:member_id>', methods=['DELETE'])
-    def delete_member(member_id):
+    @requires_auth('delete:members')
+    def delete_member(member_id, payload):
         member = Member.query.filter(Member.id == member_id).one_or_none()
 
         if member is None:
@@ -189,7 +210,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/members/<int:member_id>', methods=['PATCH'])
-    def update_member(member_id):
+    @requires_auth('patch:members')
+    def update_member(member_id, payload):
         body = request.get_json()
         address_in_dict = 'address' in body
         if 'first_name' in body:
@@ -240,7 +262,8 @@ def create_app(test_config=None):
 # Relationships Endpoints
 # -------------------
     @app.route('/relationships/add', methods=['POST'])
-    def create_relationship():
+    @requires_auth('post:relationships')
+    def create_relationship(payload):
         body = request.get_json()
 
         if not request.get_json():
@@ -265,7 +288,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/relationships/<int:relationship_id>', methods=['DELETE'])
-    def delete_relationship(relationship_id):
+    @requires_auth('delete:relationships')
+    def delete_relationship(relationship_id, payload):
         member_relationship = Member_Relationship.query.filter(
             Member_Relationship.id == relationship_id).one_or_none()
 
@@ -280,7 +304,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/relationships', methods=['GET'])
-    def get_relationships():
+    @requires_auth('get:relationships')
+    def get_relationships(payload):
         member_relationships = Member_Relationship.query.all()
         formatted_relationships = [member_relationship.format() for
                                    member_relationship in
@@ -292,7 +317,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/relationships/<int:relationship_id>', methods=['GET'])
-    def get_relationship(relationship_id):
+    @requires_auth('get:relationships')
+    def get_relationship(relationship_id, payload):
         member_relationship = Member_Relationship.query.filter(
             Member_Relationship.id == relationship_id).one_or_none()
 
@@ -305,7 +331,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/relationships/<int:relationship_id>', methods=['PATCH'])
-    def update_relationship(relationship_id):
+    @requires_auth('patch:businesses')
+    def update_relationship(relationship_id, payload):
         body = request.get_json()
         if 'business_id' in body:
             business_id = body['business_id']
@@ -343,7 +370,8 @@ def create_app(test_config=None):
 # Membership Types Endpoints
 # -------------------
     @app.route('/memberships/types/add', methods=['POST'])
-    def add_membership_type():
+    @requires_auth('post:membership_types')
+    def add_membership_type(payload):
         body = request.get_json()
 
         if not request.get_json():
@@ -368,7 +396,8 @@ def create_app(test_config=None):
 
     @app.route('/memberships/types/<int:membership_type_id>', methods=[
         'PATCH'])
-    def update_membership_type(membership_type_id):
+    @requires_auth('patch:membership_types')
+    def update_membership_type(membership_type_id, payload):
         body = request.get_json()
         if 'name' in body:
             name = body['name']
@@ -399,7 +428,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/memberships/types', methods=['GET'])
-    def get_membership_types():
+    @requires_auth('get:membership_types')
+    def get_membership_types(payload):
         membership_types = Membership_Type.query.all()
         formatted_types = [membership_type.format() for
                                    membership_type in
@@ -412,7 +442,8 @@ def create_app(test_config=None):
 
     @app.route('/memberships/types/<int:membership_type_id>', methods=[
         'GET'])
-    def get_membership_type(membership_type_id):
+    @requires_auth('get:membership_types')
+    def get_membership_type(membership_type_id, payload):
         membership_type = Membership_Type.query.filter(
             Membership_Type.id == membership_type_id).one_or_none()
 
@@ -426,7 +457,8 @@ def create_app(test_config=None):
 
     @app.route('/memberships/types/<int:membership_type_id>', methods=[
         'DELETE'])
-    def delete_membership_type(membership_type_id):
+    @requires_auth('delete:membership_types')
+    def delete_membership_type(membership_type_id, payload):
         membership_type = Membership_Type.query.filter(
             Membership_Type.id == membership_type_id).one_or_none()
 
@@ -439,7 +471,6 @@ def create_app(test_config=None):
             'success': True,
             'deleted': membership_type.format()
         })
-    # TODO: implement the error handling for this application.
 
     return app
 
