@@ -286,11 +286,11 @@ def create_app(test_config=None):
             'new_relationship': member_relationship.format()
         })
 
-    @app.route('/relationships/<int:relationship_id>', methods=['DELETE'])
+    @app.route('/relationships/<id>', methods=['DELETE'])
     @requires_auth('delete:relationships')
-    def delete_relationship(relationship_id, payload):
+    def delete_relationship(payload, id):
         member_relationship = Member_Relationship.query.filter(
-            Member_Relationship.id == relationship_id).one_or_none()
+            Member_Relationship.id == id).one_or_none()
 
         if member_relationship is None:
             abort(404)
@@ -390,13 +390,13 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'membership_type': membership_type.format()
+            'new_membership': membership_type.format()
         })
 
-    @app.route('/memberships/types/<int:membership_type_id>', methods=[
+    @app.route('/memberships/types/<id>', methods=[
         'PATCH'])
     @requires_auth('patch:membership_types')
-    def update_membership_type(membership_type_id, payload):
+    def update_membership_type(payload, id):
         body = request.get_json()
         if 'name' in body:
             name = body['name']
@@ -406,7 +406,7 @@ def create_app(test_config=None):
             active = body['active']
 
         membership_type = Membership_Type.query.filter(
-            Membership_Type.id == membership_type_id).one_or_none()
+            Membership_Type.id == id).one_or_none()
 
         if membership_type is None:
             abort(404)
@@ -439,12 +439,12 @@ def create_app(test_config=None):
             'membership_types': formatted_types
         })
 
-    @app.route('/memberships/types/<int:membership_type_id>', methods=[
+    @app.route('/memberships/types/<id>', methods=[
         'GET'])
     @requires_auth('get:membership_types')
-    def get_membership_type(membership_type_id, payload):
+    def get_membership_type(payload, id):
         membership_type = Membership_Type.query.filter(
-            Membership_Type.id == membership_type_id).one_or_none()
+            Membership_Type.id == id).one_or_none()
 
         if membership_type is None:
             abort(404)
@@ -454,12 +454,12 @@ def create_app(test_config=None):
             'membership_types': membership_type.format()
         })
 
-    @app.route('/memberships/types/<int:membership_type_id>', methods=[
+    @app.route('/memberships/types/<id>', methods=[
         'DELETE'])
     @requires_auth('delete:membership_types')
-    def delete_membership_type(membership_type_id, payload):
+    def delete_membership_type(payload, id):
         membership_type = Membership_Type.query.filter(
-            Membership_Type.id == membership_type_id).one_or_none()
+            Membership_Type.id == id).one_or_none()
 
         if membership_type is None:
             abort(404)
