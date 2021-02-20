@@ -14,7 +14,6 @@ from datetime import datetime
 from auth.auth import AuthError, requires_auth
 
 
-# TODO: Implement the OAuth authentication for this application
 # TODO: Implement the frontend for this application
 # TODO: Create Readme for this API
 # TODO: Create the tests for this API
@@ -62,10 +61,10 @@ def create_app(test_config=None):
             'success': True,
             'businesses': formatted_businesses
         })
-    @app.route('/businesses/<int:business_id>', methods=['GET'])
+    @app.route('/businesses/<id>', methods=['GET'])
     @requires_auth('get:businesses')
-    def get_business(business_id, payload):
-        business = Business.query.filter(Business.id == business_id).one_or_none()
+    def get_business(payload, id):
+        business = Business.query.filter(Business.id == id).one_or_none()
 
         if business is None:
             abort(404)
@@ -96,10 +95,10 @@ def create_app(test_config=None):
             'new_business': business.format()
         })
 
-    @app.route('/businesses/<int:business_id>', methods=['DELETE'])
+    @app.route('/businesses/<id>', methods=['DELETE'])
     @requires_auth('delete:businesses')
-    def delete_business(business_id, payload):
-        business = Business.query.filter(Business.id == business_id).one_or_none()
+    def delete_business(payload, id):
+        business = Business.query.filter(Business.id == id).one_or_none()
 
         if business is None:
             abort(404)
@@ -111,9 +110,9 @@ def create_app(test_config=None):
             'deleted': business.format()
         })
 
-    @app.route('/businesses/<int:business_id>', methods=['PATCH'])
+    @app.route('/businesses/<id>', methods=['PATCH'])
     @requires_auth('patch:businesses')
-    def update_business(business_id, payload):
+    def update_business(payload, id):
         body = request.get_json()
 
         if 'name' in body:
@@ -121,7 +120,7 @@ def create_app(test_config=None):
         if 'description' in body:
             description = body['description']
 
-        business = Business.query.filter(Business.id == business_id).one_or_none()
+        business = Business.query.filter(Business.id == id).one_or_none()
 
         if business is None:
             abort(404)
@@ -134,7 +133,7 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'business': business.format()
+            'updated': business.format()
         })
 
 # -------------------
@@ -152,10 +151,10 @@ def create_app(test_config=None):
             'members': formatted_members
         })
 
-    @app.route('/members/<int:member_id>', methods=['GET'])
+    @app.route('/members/<id>', methods=['GET'])
     @requires_auth('get:members')
-    def get_member(member_id, payload):
-        member = Member.query.filter(Member.id == member_id).one_or_none()
+    def get_member(payload, id):
+        member = Member.query.filter(Member.id == id).one_or_none()
 
         if member is None:
             abort(404)
@@ -191,13 +190,13 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'member': member.format()
+            'new_member': member.format()
         })
 
-    @app.route('/members/<int:member_id>', methods=['DELETE'])
+    @app.route('/members/<id>', methods=['DELETE'])
     @requires_auth('delete:members')
-    def delete_member(member_id, payload):
-        member = Member.query.filter(Member.id == member_id).one_or_none()
+    def delete_member(payload, id):
+        member = Member.query.filter(Member.id == id).one_or_none()
 
         if member is None:
             abort(404)
@@ -209,9 +208,9 @@ def create_app(test_config=None):
             'deleted': member.format()
         })
 
-    @app.route('/members/<int:member_id>', methods=['PATCH'])
+    @app.route('/members/<id>', methods=['PATCH'])
     @requires_auth('patch:members')
-    def update_member(member_id, payload):
+    def update_member(payload, id):
         body = request.get_json()
         address_in_dict = 'address' in body
         if 'first_name' in body:
@@ -230,7 +229,7 @@ def create_app(test_config=None):
             email_address = body['email_address']
 
         member = Member.query.filter(
-        Member.id == member_id).one_or_none()
+        Member.id == id).one_or_none()
 
         if member is None:
             abort(404)
@@ -284,7 +283,7 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'member': member_relationship.format()
+            'new_relationship': member_relationship.format()
         })
 
     @app.route('/relationships/<int:relationship_id>', methods=['DELETE'])
@@ -316,11 +315,11 @@ def create_app(test_config=None):
             'relationships': formatted_relationships
         })
 
-    @app.route('/relationships/<int:relationship_id>', methods=['GET'])
+    @app.route('/relationships/<id>', methods=['GET'])
     @requires_auth('get:relationships')
-    def get_relationship(relationship_id, payload):
+    def get_relationship(payload, id):
         member_relationship = Member_Relationship.query.filter(
-            Member_Relationship.id == relationship_id).one_or_none()
+            Member_Relationship.id == id).one_or_none()
 
         if member_relationship is None:
             abort(404)
@@ -330,9 +329,9 @@ def create_app(test_config=None):
             'relationships': member_relationship.format()
         })
 
-    @app.route('/relationships/<int:relationship_id>', methods=['PATCH'])
+    @app.route('/relationships/<id>', methods=['PATCH'])
     @requires_auth('patch:businesses')
-    def update_relationship(relationship_id, payload):
+    def update_relationship(payload, id):
         body = request.get_json()
         if 'business_id' in body:
             business_id = body['business_id']
@@ -344,7 +343,7 @@ def create_app(test_config=None):
             membership_type_id = body['membership_type_id']
 
         member_relationship = Member_Relationship.query.filter(
-            Member_Relationship.id == relationship_id).one_or_none()
+            Member_Relationship.id == id).one_or_none()
 
         if member_relationship is None:
             abort(404)
@@ -471,6 +470,30 @@ def create_app(test_config=None):
             'success': True,
             'deleted': membership_type.format()
         })
+
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "unprocessable"
+        }), 422
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return jsonify({
+            "success": False,
+            "error": 404,
+            "message": 'Not Found'
+        }), 404
+
+    @app.errorhandler(AuthError)
+    def auth_error(e):
+        return jsonify({
+            "success": False,
+            "error": e.status_code,
+            "message": e.error['description']
+        }), e.status_code
 
     return app
 
