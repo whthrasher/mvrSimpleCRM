@@ -194,6 +194,47 @@
 					"response": []
 				},
 				{
+					"name": "/businesses/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/businesses/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/members/add",
 					"event": [
 						{
@@ -237,6 +278,47 @@
 					"response": []
 				},
 				{
+					"name": "/members/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/members/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/relationships/add",
 					"event": [
 						{
@@ -260,6 +342,46 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\"business_id\": {{new_business}},\n\"member_id\": {{new_member}}, \n\"active\": true,\n\"membership_type_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/relationships/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -324,6 +446,48 @@
 					"response": []
 				},
 				{
+					"name": "/memberships/types/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/memberships/types/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/businesses/1",
 					"event": [
 						{
@@ -363,6 +527,45 @@
 					"response": []
 				},
 				{
+					"name": "/businesses/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Length",
+								"type": "text",
+								"value": "0",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/businesses/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/members/1",
 					"event": [
 						{
@@ -395,6 +598,38 @@
 					"response": []
 				},
 				{
+					"name": "/members/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/relationships/1",
 					"event": [
 						{
@@ -421,6 +656,38 @@
 							"path": [
 								"relationships",
 								"{{new_relationship}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/100",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"1000"
 							]
 						}
 					},
@@ -473,6 +740,52 @@
 					"response": []
 				},
 				{
+					"name": "/memberships/types/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}//memberships/types/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"",
+								"memberships",
+								"types",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/businesses/1",
 					"event": [
 						{
@@ -512,6 +825,47 @@
 							"path": [
 								"businesses",
 								"{{new_business}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"updated\",\n\"description\": \"We provide information to accelerate Church Planting.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/businesses/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"1000"
 							]
 						}
 					},
@@ -563,6 +917,47 @@
 					"response": []
 				},
 				{
+					"name": "/members/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"first_name\": \"Will\",\n\"last_name\": \"updated\",\n\"address\": \"1971 Test Blvd\",\n\"city\": \"testcity\",\n\"state\": \"NC\",\n\"phone\": \"333-333-3333\",\n\"email_address\": \"test@test.copm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/members/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/relationships/1",
 					"event": [
 						{
@@ -608,7 +1003,89 @@
 					"response": []
 				},
 				{
+					"name": "/relationships/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"business_id\": {{new_business}},\n\"member_id\": {{new_member}}, \n\"active\": false,\n\"membership_type_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/relationships/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/memberships/types/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"updated\",\n\"description\": \"new membership description\", \n\"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/memberships/types/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/1000",
 					"event": [
 						{
 							"listen": "test",
@@ -685,6 +1162,68 @@
 					"response": []
 				},
 				{
+					"name": "/relationship/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/businesses/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/businesses/1",
 					"event": [
 						{
@@ -747,6 +1286,37 @@
 					"response": []
 				},
 				{
+					"name": "/member/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/memberships/types/1",
 					"event": [
 						{
@@ -773,6 +1343,38 @@
 								"memberships",
 								"types",
 								"{{new_membership}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/1 Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/memberships/types/1000",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"1000"
 							]
 						}
 					},
@@ -1609,11 +2211,11 @@
 	"variable": [
 		{
 			"key": "admin-bearer",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVkcG1KTDJwLXd4WnFKdVNIVHAwXyJ9.eyJpc3MiOiJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTAzMzAwNTU4OTg2NDQ4MzcyMTAxIiwiYXVkIjpbIm12cl9hcGkiLCJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTYxMzgyNzAyNywiZXhwIjoxNjEzODM0MjI3LCJhenAiOiJHM3FYcGRQM25KY2Z1MHhFQnozaUJNaEtjOG5oOTNaaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YnVzaW5lc3NlcyIsImRlbGV0ZTptZW1iZXJzIiwiZGVsZXRlOm1lbWJlcnNoaXBfdHlwZXMiLCJkZWxldGU6cmVsYXRpb25zaGlwcyIsImdldDpidXNpbmVzc2VzIiwiZ2V0Om1lbWJlcnMiLCJnZXQ6bWVtYmVyc2hpcF90eXBlcyIsImdldDpyZWxhdGlvbnNoaXBzIiwicGF0Y2g6YnVzaW5lc3NlcyIsInBhdGNoOm1lbWJlcnMiLCJwYXRjaDptZW1iZXJzaGlwX3R5cGVzIiwicGF0Y2g6cmVsYXRpb25zaGlwcyIsInBvc3Q6YnVzaW5lc3NlcyIsInBvc3Q6bWVtYmVycyIsInBvc3Q6bWVtYmVyc2hpcF90eXBlcyIsInBvc3Q6cmVsYXRpb25zaGlwcyJdfQ.QrVxq7yKLFI3CJtxW5cb_ulSKxKo7wGs8PCTR9qkOrNcLATiuTLcN-6WMX-xpFvNSwamYMDbl7_QwvZJYIPSzRaEvm1sIuEsgA12YJhuw-SyLz6iw4WGGiHPjCgzIgsOogHwpmcLdiLm1dkW30BiDdN4n8y-ev05y6VnVRSINiS0_UyRA5XjJqK5W6ytrWMnZ7Rtl8itG9revFJ7kdytYhJzi-khP_hvwa-BtJ08tkgi1B9-4wtPqtu3C1It_mQH8InkDY9cer4FISflv_GWNBvcUMDmEm314pLOqnNaMLNpH4lvIizO_EiMiujGKGSwTI_oC6zjDi2TYdCAXI4LMw"
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVkcG1KTDJwLXd4WnFKdVNIVHAwXyJ9.eyJpc3MiOiJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTAzMzAwNTU4OTg2NDQ4MzcyMTAxIiwiYXVkIjpbIm12cl9hcGkiLCJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTYxNDA0NTgxOSwiZXhwIjoxNjE0MDUzMDE5LCJhenAiOiJHM3FYcGRQM25KY2Z1MHhFQnozaUJNaEtjOG5oOTNaaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YnVzaW5lc3NlcyIsImRlbGV0ZTptZW1iZXJzIiwiZGVsZXRlOm1lbWJlcnNoaXBfdHlwZXMiLCJkZWxldGU6cmVsYXRpb25zaGlwcyIsImdldDpidXNpbmVzc2VzIiwiZ2V0Om1lbWJlcnMiLCJnZXQ6bWVtYmVyc2hpcF90eXBlcyIsImdldDpyZWxhdGlvbnNoaXBzIiwicGF0Y2g6YnVzaW5lc3NlcyIsInBhdGNoOm1lbWJlcnMiLCJwYXRjaDptZW1iZXJzaGlwX3R5cGVzIiwicGF0Y2g6cmVsYXRpb25zaGlwcyIsInBvc3Q6YnVzaW5lc3NlcyIsInBvc3Q6bWVtYmVycyIsInBvc3Q6bWVtYmVyc2hpcF90eXBlcyIsInBvc3Q6cmVsYXRpb25zaGlwcyJdfQ.pBQIR3fiZx0m7mRF9KKi4BeeQYvVGdbJxLD3Rxww9nTQQLdhp1c9LZ2iSD9pSrkaSUL6UYUiqu_4XHdNqCiU2hx_n4YLM9OtIQeWDmj4cojCaGyODmsN5Eg_ZaUq5YQHZQeIYPJ_uA2q_70rbSAw5iEUV9-yFhfzRxBfzha0vXKPRPIKNfXebZsrFwdrvHx762zhV2hdLXrIALZBzJZprxp0uIP6emCH0cGAH7T_97M3i6-eWGLWiKFl3R-F8m5ERprWK__So1H3030p6etI5TgFr-GJEy3sSYRXMgz46G8olhdf6iQXzTSUF53bjFPKNr3Vot2cxF-tl1S6W2kmvg"
 		},
 		{
 			"key": "standard-viewer-bearer",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVkcG1KTDJwLXd4WnFKdVNIVHAwXyJ9.eyJpc3MiOiJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmZjBjYmMwNTY5NmFlMDA3MTJlYmVkYiIsImF1ZCI6Im12cl9hcGkiLCJpYXQiOjE2MTM4Mjc0MjUsImV4cCI6MTYxMzgzNDYyNSwiYXpwIjoiRzNxWHBkUDNuSmNmdTB4RUJ6M2lCTWhLYzhuaDkzWmgiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDpidXNpbmVzc2VzIiwiZ2V0Om1lbWJlcnMiLCJnZXQ6bWVtYmVyc2hpcF90eXBlcyIsImdldDpyZWxhdGlvbnNoaXBzIl19.mhu5ay0LuxfSKGMpHgBZWVurOI5pK_lpyiisWG5VS8bzWQudBAoZZQYyDYpxXzZlR6OEj4VNCMJdifYSPVZlFUO1UcqC-_HFNpWee9vzVlX1d_-ve-P3mKtUp1tdwDs1zYcnd1YASSPhOOEKmhfvvb7ToQLjXvECafIFnZatMY7Ag_1bO1cRpZ2wnqK_awbELUS-TKFSBb-fTXIAFRLNuvwtoSOELPCHYb4XacwEk5xVoh8KvIfnYuutN6I9Sf7e5V-_O4asSQhc_e5XkqTJ12se8je51UT5Zy-GI9b080crU9tQTyaFYDhY5LC4gz_Sol_xnrdy3OkBJv1aPSB6fw"
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVkcG1KTDJwLXd4WnFKdVNIVHAwXyJ9.eyJpc3MiOiJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmZjBjYmMwNTY5NmFlMDA3MTJlYmVkYiIsImF1ZCI6Im12cl9hcGkiLCJpYXQiOjE2MTQwNDYyNDIsImV4cCI6MTYxNDA1MzQ0MiwiYXpwIjoiRzNxWHBkUDNuSmNmdTB4RUJ6M2lCTWhLYzhuaDkzWmgiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDpidXNpbmVzc2VzIiwiZ2V0Om1lbWJlcnMiLCJnZXQ6bWVtYmVyc2hpcF90eXBlcyIsImdldDpyZWxhdGlvbnNoaXBzIl19.aVqBZMwVodE5KCdPLsTPiuSrN1l0HGibNKD0YGsOESZ74IBGt9CqpsaPp9l6HpVj8E0bPgb0DNrLC8E_H5LuWEEElP90Sk0Z_ov-Hzp8yt9PgZAuP7dOXpqBAJZ7LFKhmjhuFCEWR1-pSUbgdGqFjMfuyxrKo4H315bkwopZMWFqjywSEtGySjvza-ISKI7o2yC-bnlrdjpmWqJML0_nF4kpTgAVLN-t5OdZp1eF9ef__3QSw9fQFTdljFODw6mJgzcMquQTlVwlUsxTXSwFKJwxHe_zbSMGK-ZIv99FHrluzfyNvbdkNrJ5R3TmfxExxESw6lBkQ3c0yPvfoVB_Bg"
 		}
 	]
 }
