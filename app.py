@@ -21,14 +21,17 @@ from auth.auth import AuthError, requires_auth
 # TODO: Add pagination when all of the members or businesses are returned
 # TODO: Ensure that all of the information that is transferred is secure
 def create_auth0_url():
-    AUTH0_API_IDENTIFIER = os.environ("AUTH0_API_IDENTIFIER")
-    AUTH0_CLIENT_ID = os.environ("AUTH0_CLIENT_ID")
-    AUTH0_CALLBACK_URI = os.environ("AUTH0_CALLBACK_URI")
-    AUTH0_AUTHORIZE_URL = "https://$AUTH0_DOMAIN/authorize?audience=" + \
+    AUTH0_DOMAIN = os.environ["AUTH0_DOMAIN"]
+    AUTH0_API_IDENTIFIER = os.environ["AUTH0_API_IDENTIFIER"]
+    AUTH0_CLIENT_ID = os.environ["AUTH0_CLIENT_ID"]
+    AUTH0_CALLBACK_URI = os.environ["AUTH0_CALLBACK_URI"]
+    AUTH0_AUTHORIZE_URL = "https://" + AUTH0_DOMAIN + \
+                          "/authorize?audience=" + \
                           AUTH0_API_IDENTIFIER + "&response_type=token&" \
                           "client_id=" + AUTH0_CLIENT_ID \
                           + "&redirect_uri=" \
                           + AUTH0_CALLBACK_URI
+    print(AUTH0_AUTHORIZE_URL)
     return AUTH0_AUTHORIZE_URL
 def create_app(test_config=None):
 
