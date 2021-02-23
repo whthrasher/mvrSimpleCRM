@@ -1,0 +1,1619 @@
+{
+	"info": {
+		"_postman_id": "014aea23-b14d-4df4-9f69-b5bcbc45021d",
+		"name": "mvr_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account Administrator Role",
+			"item": [
+				{
+					"name": "/businesses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains businesses array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.businesses).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/businesses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains members array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.members).to.be.an('array')",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains relationships array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.relationships).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains businesses array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.membership_types).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/memberships/types",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"new_business\", jsonData.new_business.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"Church Planting Resource\",\n\"description\": \"We provide information to accelerate church planting.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/businesses/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"new_member\", jsonData.new_member.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"first_name\": \"Will\",\n\"last_name\": \"Thrasher\",\n\"address\": \"1971 Test Blvd\",\n\"city\": \"testcity\",\n\"state\": \"NC\",\n\"phone\": \"333-333-3333\",\n\"email_address\": \"test@test.copm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/members/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"new_relationship\", jsonData.new_relationship.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"business_id\": {{new_business}},\n\"member_id\": {{new_member}}, \n\"active\": true,\n\"membership_type_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/relationships/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"new_membership\", jsonData.new_membership.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"new membership\",\n\"description\": \"new membership description\", \n\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/memberships/types/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Length",
+								"value": "0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/businesses/{{new_business}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"{{new_business}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members/{{new_member}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships/{{new_relationship}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"{{new_relationship}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}//memberships/types/{{new_membership}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"",
+								"memberships",
+								"types",
+								"{{new_membership}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"business was updated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.updated.name).to.equal(\"updated\")",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"updated\",\n\"description\": \"We provide information to accelerate Church Planting.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/businesses/{{new_business}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"{{new_business}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"member was updated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.updated.name).to.equal(\"Will updated\")",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"first_name\": \"Will\",\n\"last_name\": \"updated\",\n\"address\": \"1971 Test Blvd\",\n\"city\": \"testcity\",\n\"state\": \"NC\",\n\"phone\": \"333-333-3333\",\n\"email_address\": \"test@test.copm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/members/{{new_member}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"relationship was updated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.updated.active).to.equal(false)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"business_id\": {{new_business}},\n\"member_id\": {{new_member}}, \n\"active\": false,\n\"membership_type_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/relationships/{{new_relationship}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"{{new_relationship}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"membership was updated\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.updated.active).to.equal(false)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"updated\",\n\"description\": \"new membership description\", \n\"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/memberships/types/{{new_membership}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"{{new_membership}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationship/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships/{{new_relationship}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"{{new_relationship}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/businesses/{{new_business}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"{{new_business}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/member/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members/{{new_member}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/memberships/types/{{new_membership}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"{{new_membership}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{admin-bearer}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Standard Viewer Role",
+			"item": [
+				{
+					"name": "/businesses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains businesses array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.businesses).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/businesses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains businesses array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.members).to.be.an('array')",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains businesses array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.relationships).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains businesses array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.relationships).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"Church Planting Resource\",\n\"description\": \"We provide information to accelerate church planting.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/businesses/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"business_id\": {{new_business}},\n\"member_id\": {{new_member}}, \n\"active\": true,\n\"membership_type_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/relationships/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"new membership\",\n\"description\": \"new membership description\", \n\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/memberships/types/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"first_name\": \"Will\",\n\"last_name\": \"Thrasher\",\n\"address\": \"1971 Test Blvd\",\n\"city\": \"testcity\",\n\"state\": \"NC\",\n\"phone\": \"333-333-3333\",\n\"email_address\": \"test@test.copm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/members/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/memberships/types/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Length",
+								"value": "0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/businesses/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"updated\",\n\"description\": \"We provide information to accelerate Church Planting.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/businesses/{{new_business}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"{{new_business}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/members/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"first_name\": \"Will\",\n\"last_name\": \"updated\",\n\"address\": \"1971 Test Blvd\",\n\"city\": \"testcity\",\n\"state\": \"NC\",\n\"phone\": \"333-333-3333\",\n\"email_address\": \"test@test.copm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/members/{{new_member}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationships/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"business_id\": {{new_business}},\n\"member_id\": {{new_member}}, \n\"active\": false,\n\"membership_type_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/relationships/{{new_relationship}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"{{new_relationship}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"updated\",\n\"description\": \"new membership description\", \n\"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/memberships/types/{{new_membership}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"{{new_membership}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/businesses/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/businesses/{{new_business}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"businesses",
+								"{{new_business}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/member/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/members/{{new_member}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/relationship/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/relationships/{{new_relationship}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"relationships",
+								"{{new_relationship}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/memberships/types/types/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/memberships/types/{{new_membership}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"memberships",
+								"types",
+								"{{new_membership}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{standard-viewer-bearer}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVkcG1KTDJwLXd4WnFKdVNIVHAwXyJ9.eyJpc3MiOiJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTAzMzAwNTU4OTg2NDQ4MzcyMTAxIiwiYXVkIjpbIm12cl9hcGkiLCJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTYxMzY5ODk1MywiZXhwIjoxNjEzNzA2MTUzLCJhenAiOiJHM3FYcGRQM25KY2Z1MHhFQnozaUJNaEtjOG5oOTNaaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YnVzaW5lc3NlcyIsImRlbGV0ZTptZW1iZXJzIiwiZGVsZXRlOm1lbWJlcnNoaXBfdHBlcyIsImRlbGV0ZTpyZWxhdGlvbnNoaXBzIiwiZ2V0OmJ1c2luZXNzZXMiLCJnZXQ6bWVtYmVycyIsImdldDptZW1iZXJzaGlwX3R5cGVzIiwiZ2V0OnJlbGF0aW9uc2hpcHMiLCJwYXRjaDpidXNpbmVzc2VzIiwicGF0Y2g6bWVtYmVycyIsInBhdGNoOm1lbWJlcnNoaXBfdHlwZXMiLCJwYXRjaDpyZWxhdGlvbnNoaXBzIiwicG9zdDpidXNpbmVzc2VzIiwicG9zdDptZW1iZXJzIiwicG9zdDptZW1iZXJzaGlwX3R5cGVzIiwicG9zdDpyZWxhdGlvbnNoaXBzIl19.QY431M_6tDdWeJUZOFH_txeGkwcsBocgAnN_O-NsLcF9wrpEByqMa1I0xZC_W3768epWtwPtP2WGo85mvTPMkUEOUeYZEbNns2QhAKuglers8-2kTmBjgatzQHBvwGd13x2g7D2Ba7NJBTh0zwJwwcJDDli75mBphxEc55JE_YZkkWAUR_0CctCTUwf-SzJqJrXc0GsmzKz0CeJIGmO9DYuMa0xnw_iS7eXF-c1CRyI3SMleeAi18lWByFG7-TQYSUuIYeR-A7QPFeLfKS7816pt8cMO1hvMQfLZCBDb0bqqntpp50nvS-tAKC5cYIZOBCnrdt8KnXHgAoDZuxvsSg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "admin-bearer",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVkcG1KTDJwLXd4WnFKdVNIVHAwXyJ9.eyJpc3MiOiJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTAzMzAwNTU4OTg2NDQ4MzcyMTAxIiwiYXVkIjpbIm12cl9hcGkiLCJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTYxMzgyNzAyNywiZXhwIjoxNjEzODM0MjI3LCJhenAiOiJHM3FYcGRQM25KY2Z1MHhFQnozaUJNaEtjOG5oOTNaaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YnVzaW5lc3NlcyIsImRlbGV0ZTptZW1iZXJzIiwiZGVsZXRlOm1lbWJlcnNoaXBfdHlwZXMiLCJkZWxldGU6cmVsYXRpb25zaGlwcyIsImdldDpidXNpbmVzc2VzIiwiZ2V0Om1lbWJlcnMiLCJnZXQ6bWVtYmVyc2hpcF90eXBlcyIsImdldDpyZWxhdGlvbnNoaXBzIiwicGF0Y2g6YnVzaW5lc3NlcyIsInBhdGNoOm1lbWJlcnMiLCJwYXRjaDptZW1iZXJzaGlwX3R5cGVzIiwicGF0Y2g6cmVsYXRpb25zaGlwcyIsInBvc3Q6YnVzaW5lc3NlcyIsInBvc3Q6bWVtYmVycyIsInBvc3Q6bWVtYmVyc2hpcF90eXBlcyIsInBvc3Q6cmVsYXRpb25zaGlwcyJdfQ.QrVxq7yKLFI3CJtxW5cb_ulSKxKo7wGs8PCTR9qkOrNcLATiuTLcN-6WMX-xpFvNSwamYMDbl7_QwvZJYIPSzRaEvm1sIuEsgA12YJhuw-SyLz6iw4WGGiHPjCgzIgsOogHwpmcLdiLm1dkW30BiDdN4n8y-ev05y6VnVRSINiS0_UyRA5XjJqK5W6ytrWMnZ7Rtl8itG9revFJ7kdytYhJzi-khP_hvwa-BtJ08tkgi1B9-4wtPqtu3C1It_mQH8InkDY9cer4FISflv_GWNBvcUMDmEm314pLOqnNaMLNpH4lvIizO_EiMiujGKGSwTI_oC6zjDi2TYdCAXI4LMw"
+		},
+		{
+			"key": "standard-viewer-bearer",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVkcG1KTDJwLXd4WnFKdVNIVHAwXyJ9.eyJpc3MiOiJodHRwczovL2NwcmVzb3VyY2UudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmZjBjYmMwNTY5NmFlMDA3MTJlYmVkYiIsImF1ZCI6Im12cl9hcGkiLCJpYXQiOjE2MTM4Mjc0MjUsImV4cCI6MTYxMzgzNDYyNSwiYXpwIjoiRzNxWHBkUDNuSmNmdTB4RUJ6M2lCTWhLYzhuaDkzWmgiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDpidXNpbmVzc2VzIiwiZ2V0Om1lbWJlcnMiLCJnZXQ6bWVtYmVyc2hpcF90eXBlcyIsImdldDpyZWxhdGlvbnNoaXBzIl19.mhu5ay0LuxfSKGMpHgBZWVurOI5pK_lpyiisWG5VS8bzWQudBAoZZQYyDYpxXzZlR6OEj4VNCMJdifYSPVZlFUO1UcqC-_HFNpWee9vzVlX1d_-ve-P3mKtUp1tdwDs1zYcnd1YASSPhOOEKmhfvvb7ToQLjXvECafIFnZatMY7Ag_1bO1cRpZ2wnqK_awbELUS-TKFSBb-fTXIAFRLNuvwtoSOELPCHYb4XacwEk5xVoh8KvIfnYuutN6I9Sf7e5V-_O4asSQhc_e5XkqTJ12se8je51UT5Zy-GI9b080crU9tQTyaFYDhY5LC4gz_Sol_xnrdy3OkBJv1aPSB6fw"
+		}
+	]
+}
