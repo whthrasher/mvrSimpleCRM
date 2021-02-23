@@ -35,11 +35,6 @@ def create_app(test_config=None):
                              'GET,PATCH,POST,DELETE,OPTIONS')
         return response
 
-    @app.route('/')
-    def get_greeting():
-        greeting = "Hello"
-        return greeting
-
     @app.route('/login')
     def auth0_redirect():
         AUTH0_AUTHORIZE_URL = os.environ['AUTH0_AUTHORIZE_URL']
