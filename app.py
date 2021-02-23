@@ -13,13 +13,6 @@ from flask_cors import CORS
 from datetime import datetime
 from auth.auth import AuthError, requires_auth
 
-
-# TODO: Implement the frontend for this application
-# TODO: Create Readme for this API
-# TODO: Create the tests for this API
-# TODO: Create the Heroku Code Pipeline for this application
-# TODO: Add pagination when all of the members or businesses are returned
-# TODO: Ensure that all of the information that is transferred is secure
 def create_auth0_url():
     AUTH0_DOMAIN = os.environ["AUTH0_DOMAIN"]
     AUTH0_API_IDENTIFIER = os.environ["AUTH0_API_IDENTIFIER"]
