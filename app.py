@@ -13,24 +13,25 @@ from flask_cors import CORS
 from datetime import datetime
 from auth.auth import AuthError, requires_auth
 
-def create_auth0_url():
-    AUTH0_DOMAIN = os.environ["AUTH0_DOMAIN"]
-    AUTH0_API_IDENTIFIER = os.environ["AUTH0_API_IDENTIFIER"]
-    AUTH0_CLIENT_ID = os.environ["AUTH0_CLIENT_ID"]
-    AUTH0_CALLBACK_URI = os.environ["AUTH0_CALLBACK_URI"]
-    AUTH0_AUTHORIZE_URL = "https://" + AUTH0_DOMAIN + \
-                          "/authorize?audience=" + \
-                          AUTH0_API_IDENTIFIER + "&response_type=token&" \
-                          "client_id=" + AUTH0_CLIENT_ID \
-                          + "&redirect_uri=" \
-                          + AUTH0_CALLBACK_URI
-    print(AUTH0_AUTHORIZE_URL)
-    return AUTH0_AUTHORIZE_URL
-def create_app(test_config=None):
 
+def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
+
+    def create_auth0_url():
+        AUTH0_DOMAIN = os.environ["AUTH0_DOMAIN"]
+        AUTH0_API_IDENTIFIER = os.environ["AUTH0_API_IDENTIFIER"]
+        AUTH0_CLIENT_ID = os.environ["AUTH0_CLIENT_ID"]
+        AUTH0_CALLBACK_URI = os.environ["AUTH0_CALLBACK_URI"]
+        AUTH0_AUTHORIZE_URL = "https://" + AUTH0_DOMAIN + \
+                              "/authorize?audience=" + \
+                              AUTH0_API_IDENTIFIER + \
+                              "&response_type=token&" + \
+                              "client_id=" + AUTH0_CLIENT_ID \
+                              + "&redirect_uri=" \
+                              + AUTH0_CALLBACK_URI
+        return AUTH0_AUTHORIZE_URL
 
     @app.after_request
     def after_request(response):
@@ -45,21 +46,20 @@ def create_app(test_config=None):
         AUTH0_AUTHORIZE_URL = create_auth0_url()
         return redirect(AUTH0_AUTHORIZE_URL)
 
-#-------------------
-# Business Endpoints
-#-------------------
+    # Business Endpoints
 
     @app.route('/businesses', methods=['GET'])
     @requires_auth('get:businesses')
     def get_businesses(payload):
         businesses = Business.query.all()
         formatted_businesses = [business.format() for business in
-                               businesses]
+                                businesses]
 
         return jsonify({
             'success': True,
             'businesses': formatted_businesses
         })
+
     @app.route('/businesses/<id>', methods=['GET'])
     @requires_auth('get:businesses')
     def get_business(payload, id):
@@ -135,16 +135,14 @@ def create_app(test_config=None):
             'updated': business.format()
         })
 
-# -------------------
-# Members Endpoints
-# -------------------
+    # -------------------
+    # Members Endpoints
+    # -------------------
     @app.route('/members', methods=['GET'])
     @requires_auth('get:members')
     def get_members(payload):
         members = Member.query.all()
-        formatted_members = [member.format() for member in
-                               members]
-
+        formatted_members = [member.format() for member in members]
         return jsonify({
             'success': True,
             'members': formatted_members
@@ -227,8 +225,7 @@ def create_app(test_config=None):
         if 'email_address' in body:
             email_address = body['email_address']
 
-        member = Member.query.filter(
-        Member.id == id).one_or_none()
+        member = Member.query.filter(Member.id == id).one_or_none()
 
         if member is None:
             abort(404)
@@ -256,9 +253,9 @@ def create_app(test_config=None):
             'updated': member.format()
         })
 
-# -------------------
-# Relationships Endpoints
-# -------------------
+    # -------------------
+    # Relationships Endpoints
+    # -------------------
     @app.route('/relationships/add', methods=['POST'])
     @requires_auth('post:relationships')
     def create_relationship(payload):
@@ -267,6 +264,7 @@ def create_app(test_config=None):
         if not request.get_json():
             abort(400)
 
+        date_added = datetime.today()
         business_id = body['business_id']
         member_id = body['member_id']
         active = body['active']
@@ -275,11 +273,11 @@ def create_app(test_config=None):
         member_relationship = Member_Relationship(business_id=business_id,
                                                   member_id=member_id,
                                                   active=active,
-                                                  membership_type_id=membership_type_id
+                                                  membership_type_id=
+                                                  membership_type_id,
+                                                  date_added=date_added
                                                   )
-
         Member_Relationship.insert(member_relationship)
-
         return jsonify({
             'success': True,
             'new_relationship': member_relationship.format()
@@ -329,7 +327,7 @@ def create_app(test_config=None):
         })
 
     @app.route('/relationships/<id>', methods=['PATCH'])
-    @requires_auth('patch:businesses')
+    @requires_auth('patch:relationships')
     def update_relationship(payload, id):
         body = request.get_json()
         if 'business_id' in body:
@@ -364,9 +362,9 @@ def create_app(test_config=None):
             'updated': member_relationship.format()
         })
 
-# -------------------
-# Membership Types Endpoints
-# -------------------
+    # -------------------
+    # Membership Types Endpoints
+    # -------------------
     @app.route('/memberships/types/add', methods=['POST'])
     @requires_auth('post:membership_types')
     def add_membership_type(payload):
@@ -383,7 +381,7 @@ def create_app(test_config=None):
             name=name,
             description=description,
             active=active,
-            )
+        )
 
         Membership_Type.insert(membership_type)
 
@@ -430,8 +428,8 @@ def create_app(test_config=None):
     def get_membership_types(payload):
         membership_types = Membership_Type.query.all()
         formatted_types = [membership_type.format() for
-                                   membership_type in
-                                   membership_types]
+                           membership_type in
+                           membership_types]
 
         return jsonify({
             'success': True,
@@ -471,7 +469,7 @@ def create_app(test_config=None):
         })
 
     @app.errorhandler(422)
-    def unprocessable(error):
+    def unprocessable(e):
         return jsonify({
             "success": False,
             "error": 422,
@@ -486,6 +484,22 @@ def create_app(test_config=None):
             "message": 'Not Found'
         }), 404
 
+    @app.errorhandler(400)
+    def bad_request(e):
+        return jsonify({
+            "success": False,
+            "error": 400,
+            "message": 'Bad Request'
+        }), 400
+
+    @app.errorhandler(403)
+    def forbidden(e):
+        return jsonify({
+            "success": False,
+            "error": 403,
+            "message": 'Forbidden'
+        }), 403
+
     @app.errorhandler(AuthError)
     def auth_error(e):
         return jsonify({
@@ -495,6 +509,7 @@ def create_app(test_config=None):
         }), e.status_code
 
     return app
+
 
 app = create_app()
 

@@ -1,15 +1,11 @@
 import json
-from flask import request, _request_ctx_stack
+from flask import request
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 import os
 
-AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
-ALGORITHMS = ['RS256']
-API_AUDIENCE = os.environ['AUTH0_API_IDENTIFIER']
-
-## AuthError Exception
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
@@ -22,7 +18,7 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
-## Auth Header
+# Auth Header
 
 def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
@@ -69,6 +65,9 @@ def check_permissions(permission, payload):
 
 
 def verify_decode_jwt(token):
+    AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+    ALGORITHMS = ['RS256']
+    API_AUDIENCE = os.environ['AUTH0_API_IDENTIFIER']
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)

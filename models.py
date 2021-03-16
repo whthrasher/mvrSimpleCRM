@@ -15,7 +15,8 @@ import json
 database_path = os.environ.get('DATABASE_URL')
 if not database_path:
     database_name = "mvrdb"
-    database_path = "postgres://{}/{}".format('localhost:5432', database_name)
+    database_path = "postgres://{}/{}".format('localhost:5432',
+                                              database_name)
 
 db = SQLAlchemy()
 
@@ -24,51 +25,49 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 
+
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    # db.create_all()
+    db.create_all()
 
-'''
-Business
-'''
+
+# Business
 class Business(db.Model):
-  __tablename__ = 'businesses'
+    __tablename__ = 'businesses'
 
-  id = Column(db.Integer, primary_key=True)
-  date_added = Column(db.DateTime, nullable=False)
-  name = Column(db.String, nullable=False)
-  description = Column(db.String)
+    id = Column(db.Integer, primary_key=True)
+    date_added = Column(db.DateTime, nullable=False)
+    name = Column(db.String, nullable=False)
+    description = Column(db.String)
 
-  def __init__(self, name, description, date_added):
-    self.name = name
-    self.description = description
-    self.date_added = date_added
+    def __init__(self, name, description, date_added):
+        self.name = name
+        self.description = description
+        self.date_added = date_added
 
-  def insert(self):
-      db.session.add(self)
-      db.session.commit()
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
 
-  def update(self):
-      db.session.commit()
+    def update(self):
+        db.session.commit()
 
-  def delete(self):
-      db.session.delete(self)
-      db.session.commit()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
-  def format(self):
-    return {
-      'id': self.id,
-      'added': self.date_added,
-      'name': self.name,
-      'description': self.description}
+    def format(self):
+        return {
+            'id': self.id,
+            'added': self.date_added,
+            'name': self.name,
+            'description': self.description}
 
 
-'''
-members
-'''
+# Members
 class Member(db.Model):
     __tablename__ = 'members'
 
@@ -113,9 +112,11 @@ class Member(db.Model):
             'email_address': self.email_address
         }
 
+
 '''
 bm_rel
 '''
+
 
 class Member_Relationship(db.Model):
     __tablename__ = 'member_relationships'
@@ -126,16 +127,19 @@ class Member_Relationship(db.Model):
                          nullable=False)
     member_id = Column(Integer, db.ForeignKey('members.id'),
                        nullable=False)
-    active = db.Column(Boolean, nullable=False, default=False)
-    membership_type_id = Column(Integer, db.ForeignKey(
-        'membership_types.id'), nullable=False)
+    active = db.Column(Boolean, nullable=False, default=True)
+    membership_type_id = Column(Integer,
+                                db.ForeignKey('membership_types.id'),
+                                nullable=False)
 
-    def __init__(self, business_id, member_id, active, membership_type_id):
-        self.business_id = business_id
-        self.member_id = member_id
+    def __init__(self, business_id, member_id, active,
+                 membership_type_id, date_added):
+
+        self.business_id = int(business_id)
+        self.member_id = int(member_id)
         self.active = active
-        self.membership_type_id = membership_type_id
-        self.date_added = datetime.today()
+        self.membership_type_id = int(membership_type_id)
+        self.date_added = date_added
 
     def insert(self):
         db.session.add(self)
@@ -157,6 +161,7 @@ class Member_Relationship(db.Model):
             'membership_type_id': self.membership_type_id,
             'date_added': self.date_added
         }
+
 
 class Membership_Type(db.Model):
     __tablename__ = 'membership_types'
@@ -192,5 +197,3 @@ class Membership_Type(db.Model):
             'description': self.description,
             'active': self.active,
         }
-
-
